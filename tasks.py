@@ -1,4 +1,5 @@
 from celery import Celery
+from celery.contrib import rdb
 from time import sleep
 import random
 # Connecting to the rabbitmq broker through localhost
@@ -7,6 +8,7 @@ obj=Celery('tasks',backend='rpc://',broker='amqp://guest@localhost//')
 @obj.task
 def hello():
     sleep(random.randint(1, 10))
+    rdb.set_trace()
     return "hello world!"
 
 @obj.task
